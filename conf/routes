@@ -1,0 +1,3 @@
+GET        /            controllers.Application.index
+
+GET        /json        controllers.Application.json
