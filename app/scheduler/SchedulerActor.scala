@@ -4,11 +4,12 @@ import javax.inject.{Inject, Singleton}
 
 import akka.actor.Actor
 import play.api.Logger
+import services.UserService
 
 
-// TODO: how to get UserService injected here?
+// Here, injecting and using UserService works just fine
 @Singleton
-class SchedulerActor @Inject() extends Actor {
+class SchedulerActor @Inject()(userService: UserService) extends Actor {
 
   val log = Logger(this.getClass)
   log.info("Initializing SchedulerActor...")
@@ -18,9 +19,8 @@ class SchedulerActor @Inject() extends Actor {
   }
 
   def cleanup(): Unit = {
-    log.info("cleanup running")
-    // TODO: How to call UserService.cleanupTokens() from here?
+    userService.cleanupTokens()
+    log.info("Users: " + userService.findAll())
   }
-
 
 }
