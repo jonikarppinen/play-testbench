@@ -2,15 +2,17 @@ package controllers
 
 import javax.inject.Inject
 
-import models.FooJson
-import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
-import services.ReportService
+import services.{ReportService, UserService}
 
-class Application @Inject()(reportService: ReportService) extends Controller {
+class Application @Inject()(reportService: ReportService, userService: UserService) extends Controller {
 
   def index = Action {
     Ok(reportService.foobar)
+  }
+
+  def users = Action {
+    Ok(userService.findAll().mkString(", "))
   }
 
 }
