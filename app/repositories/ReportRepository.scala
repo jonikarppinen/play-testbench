@@ -66,9 +66,9 @@ class ReportRepository {
   }
 
   /**
-   * Trying to apply approach by Joel Arnold at http://stackoverflow.com/a/18308023/56285
+   * Trying to apply the approach by Joel Arnold at http://stackoverflow.com/a/18308023/56285
    *
-   * This works find with the Long param, but with ZonedDateTime param fails with:
+   * This works fine with the Long param, but with ZonedDateTime param fails with:
    * [PSQLException: ERROR: could not determine data type of parameter]
    * (Try removing the line: AND ({created} is null or created >= {created}) )
    *
