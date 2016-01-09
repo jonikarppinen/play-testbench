@@ -1,2 +1,5 @@
-GET        /            controllers.Application.index
-GET        /users       controllers.Application.users
+GET        /                  controllers.Application.index
+GET        /users             controllers.Application.users
+
+GET        /reports           controllers.ReportController.all
+GET        /reports/count     controllers.ReportController.count(customerId: Option[Long], createdSince: Option[Long])
