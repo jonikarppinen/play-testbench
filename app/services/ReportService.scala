@@ -17,9 +17,8 @@ class ReportService @Inject()(repository: ReportRepository, userService: UserSer
   def count(customerId: Option[Long], createdSince: Option[ZonedDateTime]) = {
     log.info(s"Counting reports (customerId: $customerId, createdSince: $createdSince)")
 
-//    repository.countOption1(customerId, createdSince) // Works fine!
-
-    // countOption2 always fails with "PSQLException: ERROR: could not determine data type of parameter $3"
+    // Both of these now work
+//    repository.countOption1(customerId, createdSince)
     repository.countOption2(customerId, createdSince)
   }
 

@@ -66,13 +66,10 @@ class ReportRepository {
   }
 
   /**
-   * Trying to apply the approach by Joel Arnold at http://stackoverflow.com/a/18308023/56285
+   * Applying the approach by Joel Arnold at http://stackoverflow.com/a/18308023/56285
    *
-   * This works fine with the Long param, but with ZonedDateTime param fails with:
-   * [PSQLException: ERROR: could not determine data type of parameter]
-   * (Try removing the line: AND ({created} is null or created >= {created}) )
-   *
-   * TODO: how to make this work with ZonedDateTime too?
+   * This now works fine as well! As Joel pointed out, with ZonedDateTime we need to use
+   * {created}::timestamptz in the null check, as a workaround to a PostgreSQL driver issue.
    */
   def countOption2(customerId: Option[Long], createdSince: Option[ZonedDateTime]) =
     DB.withConnection {
@@ -80,7 +77,7 @@ class ReportRepository {
         SQL( """
             SELECT count(*) FROM report
             WHERE ({customerId} is null or customer_id = {customerId})
-            AND ({created} is null or created >= {created})
+            AND ({created}::timestamptz is null or created >= {created})
              """)
           .on('customerId -> customerId, 'created -> createdSince)
           .as(scalar[Int].singleOpt).getOrElse(0)
